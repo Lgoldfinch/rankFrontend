@@ -14,17 +14,45 @@ import {
   View,
   Text,
   StatusBar,
+  FlatList
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
+  Colors
 } from 'react-native/Libraries/NewAppScreen';
 
+
+const taxiData = [
+  {
+    id: '1',
+    provider: 'First Item',
+    price: 4.99
+  },
+  {
+    id: '2',
+    provider: 'Second Item',
+    price: 6
+  },
+  {
+    id: '3',
+    provider: 'Third Item',
+    price: 5.50
+  },
+];
+
+const Item = ({ item }) => (
+  <View style={styles.itemRow}>
+    <Text style={styles.itemProvider}>{item.provider}</Text>
+    <Text style={styles.itemPrice}>{item.price}</Text>
+  </View>
+);
+
+
 const App: () => React$Node = () => {
+  const renderItem = ({ item }) => (
+    <Item item={item} />
+  );
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -32,39 +60,16 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
+              <Text style={styles.sectionTitle}>Rank</Text>
+              <FlatList
+                data={taxiData}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+              />
             </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+   
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -74,7 +79,7 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: Colors.black,
   },
   engine: {
     position: 'absolute',
@@ -88,26 +93,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 32,
+    fontWeight: '700',
+    textAlign: 'center',
     color: Colors.black,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  itemProvider: {
+    fontSize: 20
   },
-  highlight: {
-    fontWeight: '700',
+  itemPrice: {
+    marginLeft: 150,
+    fontSize: 18
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  itemRow: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 40,
+    backgroundColor: '#d3d3d3',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 4
   },
 });
 
