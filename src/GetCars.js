@@ -4,34 +4,28 @@ import {
     Text, TouchableOpacity, FlatList
 } from 'react-native'
 
-
-
-
-
-
 class GetCars extends Component {
     constructor (props: {}) {
         super(props);
 
+        this.renderCar = this.renderCar.bind(this);
+
         this.state = {
-            cars: [],
-            driverName: '',
-            price: '',
-            rating: ''
+            cars: []
         }
     }
 
-     Car = ({ car }) => (
-        <View>
-            <Text>{car.driverName}</Text>
-            <Text>{car.price}</Text>
-            <Text>{car.rating}</Text>
-        </View>
-    );
-
-     renderCar = ({ car }) => (
-        <Car car={car} />
-    );
+     renderCar = ({ car }) => {
+        console.log("le car")
+        console.log(car)
+         return (
+             <View>
+                 <Text>{car.driverName}</Text>
+                 <Text>{car.price}</Text>
+                 <Text>{car.rating}</Text>
+             </View>
+         );
+     }
 
     handleGetCars = async () => {
         try {
@@ -41,10 +35,12 @@ class GetCars extends Component {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 }
-            }).then((response) => response.json())
+            }).then((response) => {
+               return response.json()
+             })
                 .then((responseJson) => {
-                    this.setState({
-                    cars: responseJson
+                    this.setState( {
+                        cars: responseJson.lifts
                     })
                 })
         } catch (error) {
@@ -53,6 +49,8 @@ class GetCars extends Component {
     }
 
     render() {
+        console.log("from cars")
+        console.log(this.state.cars)
         return (
             <View >
                      <TouchableOpacity style = {{ margin: 128 }} onPress = {this.handleGetCars}>
