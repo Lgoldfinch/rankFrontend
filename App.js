@@ -14,33 +14,11 @@ import {
   View,
   Text,
   StatusBar,
-  FlatList
 } from 'react-native';
 
 import GetCars from "./src/GetCars";
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import NativeAccessibilityManager from "react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityManager";
-// import Routes from './src/Routes.jsx';
-
-
-const taxiData = [
-  {
-    id: '1',
-    provider: 'First Item',
-    price: 4.99
-  },
-  {
-    id: '2',
-    provider: 'Second Item',
-    price: 6
-  },
-  {
-    id: '3',
-    provider: 'Third Item',
-    price: 5.50
-  },
-];
 
 const App: () => React$Node = () => {
   return (
@@ -55,7 +33,6 @@ const App: () => React$Node = () => {
               <Text style={styles.sectionTitle}>Rank</Text>
               <GetCars/>
             </View>
-
           </View>
         </ScrollView>
       </SafeAreaView>

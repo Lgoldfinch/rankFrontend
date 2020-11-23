@@ -5,17 +5,9 @@ import {
 } from 'react-native'
 
 
-const Car = ({ car }) => (
-    <View>
-        <Text>{car.driverName}</Text>
-        <Text>{car.price}</Text>
-        <Text>{car.rating}</Text>
-    </View>
-);
 
-const renderCar = ({ car }) => (
-    <Car car={car} />
-);
+
+
 
 class GetCars extends Component {
     constructor (props: {}) {
@@ -28,6 +20,18 @@ class GetCars extends Component {
             rating: ''
         }
     }
+
+     Car = ({ car }) => (
+        <View>
+            <Text>{car.driverName}</Text>
+            <Text>{car.price}</Text>
+            <Text>{car.rating}</Text>
+        </View>
+    );
+
+     renderCar = ({ car }) => (
+        <Car car={car} />
+    );
 
     handleGetCars = async () => {
         try {
@@ -56,20 +60,11 @@ class GetCars extends Component {
                      </TouchableOpacity>
                 <FlatList
                     data={this.state.cars}
-                    renderItem={renderCar}
-                    // keyExtractor={item => item.id}
+                    renderItem={this.renderCar}
                 />
             </View>
-            // <View>
-
-            // </View>
         );
     }
 }
 
 export default GetCars;
-// body: JSON.stringify({
-//     a: this.state.driverName,
-//     b: this.state.price,
-//     c: this.state.rating
-// })
