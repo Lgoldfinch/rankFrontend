@@ -3,45 +3,65 @@ import {
     View,
     Text, TouchableOpacity, FlatList
 } from 'react-native'
+import * as Alert from "react-native/Libraries/Alert/Alert";
 
 class GetCars extends Component {
-    constructor (props: {}) {
+    constructor(props: {}) {
         super(props);
 
-        this.renderCar = this.renderCar.bind(this);
-
         this.state = {
-            cars: []
+             availableLifts: []
         }
     }
 
-     renderCar = ({ car }) => {
-        console.log("le car")
-        console.log(car)
-         return (
-             <View>
-                 <Text>{car.driverName}</Text>
-                 <Text>{car.price}</Text>
-                 <Text>{car.rating}</Text>
-             </View>
-         );
-     }
+        // getLiftsIntoTastyView = this.state.availableLifts.map((lift) => {
+        //     console.log(lift.driverName);
+        // });
+
+
+
+     lifts = (availableLifts: []) => {
+        return (
+           <>
+               {availableLifts.map((data, key) => {
+                   console.log("get in here?");
+                   return (
+                       <FlatList
+                           data = {data}
+                           renderItem = {({item}) => (<Text> {item} </Text>)}
+                       />
+               );
+           })}
+           </>
+        )
+        }
+
+        renderCar = ({car}) => {
+        return (
+            <View>
+                <Text>{car.driverName}</Text>
+                <Text>{car.price}</Text>
+                <Text>{car.rating}</Text>
+            </View>
+        );
+    }
 
     handleGetCars = async () => {
         try {
-             await fetch('http://localhost:9000/products', {
+            return await fetch('http://localhost:9000/products', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 }
             }).then((response) => {
-               return response.json()
-             })
+                return response.json()
+            })
                 .then((responseJson) => {
-                    this.setState( {
-                        cars: responseJson.lifts
-                    })
+                    this.setState({
+                        availableLifts: responseJson
+                    }, this.lifts(responseJson)
+                )
                 })
         } catch (error) {
             console.error(error);
@@ -49,18 +69,14 @@ class GetCars extends Component {
     }
 
     render() {
-        console.log("from cars")
-        console.log(this.state.cars)
         return (
-            <View >
-                     <TouchableOpacity style = {{ margin: 128 }} onPress = {this.handleGetCars}>
-                         <Text> Click me to get soomeeeee </Text>
-                     </TouchableOpacity>
-                <FlatList
-                    data={this.state.cars}
-                    renderItem={this.renderCar}
-                />
+            <>
+            <View>
+                <TouchableOpacity style={{margin: 128}} onPress={this.handleGetCars}>
+                    <Text> Click me to get soomeeeee </Text>
+                </TouchableOpacity>
             </View>
+                </>
         );
     }
 }
