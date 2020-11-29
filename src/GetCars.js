@@ -1,31 +1,50 @@
 import React, {Component} from 'react';
 import {
     View,
-    Text, TouchableOpacity, FlatList
+    Text,
+    TouchableOpacity,
+    FlatList,
+    StyleSheet
 } from 'react-native'
 
 class GetCars extends Component {
     constructor (props: {}) {
         super(props);
 
-        this.renderCar = this.renderCar.bind(this);
-
         this.state = {
             cars: []
         }
     }
 
-     renderCar = ({ car }) => {
-        console.log("le car")
-        console.log(car)
-         return (
-             <View>
-                 <Text>{car.driverName}</Text>
-                 <Text>{car.price}</Text>
-                 <Text>{car.rating}</Text>
-             </View>
-         );
-     }
+    styles = StyleSheet.create({
+        itemProvider: {
+          fontSize: 20
+        },
+        itemPrice: {
+          marginLeft: 150,
+          fontSize: 18
+        },
+        itemRow: {
+          flex: 1,
+          flexDirection: "row",
+          marginVertical: 40,
+          backgroundColor: '#d3d3d3',
+          padding: 20,
+          marginVertical: 8,
+          marginHorizontal: 16,
+          borderRadius: 4
+        },
+      });
+
+    renderCar = ({ item }) => {
+        return (
+            <View style={this.styles.itemRow}>
+                <Text style={this.styles.itemProvider}>{item.driverName}</Text>
+                <Text style={this.styles.itemPrice}>{item.price}</Text>
+            </View>
+        );
+    }
+     
 
     handleGetCars = async () => {
         try {
@@ -49,8 +68,6 @@ class GetCars extends Component {
     }
 
     render() {
-        console.log("from cars")
-        console.log(this.state.cars)
         return (
             <View >
                      <TouchableOpacity style = {{ margin: 128 }} onPress = {this.handleGetCars}>
@@ -59,6 +76,7 @@ class GetCars extends Component {
                 <FlatList
                     data={this.state.cars}
                     renderItem={this.renderCar}
+                    keyExtractor={car => car.driverName}
                 />
             </View>
         );
