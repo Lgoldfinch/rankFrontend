@@ -12,7 +12,7 @@ class GetCars extends Component {
         super(props);
 
         this.state = {
-            cars: []
+            availableLifts: []
         }
     }
 
@@ -27,7 +27,6 @@ class GetCars extends Component {
         itemRow: {
           flex: 1,
           flexDirection: "row",
-          marginVertical: 40,
           backgroundColor: '#d3d3d3',
           padding: 20,
           marginVertical: 8,
@@ -36,11 +35,12 @@ class GetCars extends Component {
         },
       });
 
-    renderCar = ({ item }) => {
+    renderAvailableLifts = ({ item }) => {
         return (
             <View style={this.styles.itemRow}>
                 <Text style={this.styles.itemProvider}>{item.driverName}</Text>
                 <Text style={this.styles.itemPrice}>{item.price}</Text>
+                <Text style={this.styles.itemPrice}>{item.rating}</Text>
             </View>
         );
     }
@@ -59,7 +59,7 @@ class GetCars extends Component {
              })
                 .then((responseJson) => {
                     this.setState( {
-                        cars: responseJson.lifts
+                        availableLifts: responseJson.lifts
                     })
                 })
         } catch (error) {
@@ -74,8 +74,8 @@ class GetCars extends Component {
                          <Text> Click me to get soomeeeee </Text>
                      </TouchableOpacity>
                 <FlatList
-                    data={this.state.cars}
-                    renderItem={this.renderCar}
+                    data={this.state.availableLifts}
+                    renderItem={this.renderAvailableLifts}s
                     keyExtractor={car => car.driverName}
                 />
             </View>
