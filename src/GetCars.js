@@ -48,7 +48,7 @@ class GetCars extends Component {
 
     handleGetCars = async () => {
         try {
-             await fetch('http://localhost:9000/products', {
+             await fetch('http://localhost:9000/products?latitude=37.7752315&longitude=-122.418075', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -58,6 +58,7 @@ class GetCars extends Component {
                return response.json()
              })
                 .then((responseJson) => {
+                    console.log(responseJson)
                     this.setState( {
                         availableLifts: responseJson.lifts
                     })
