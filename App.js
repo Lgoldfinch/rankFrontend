@@ -14,45 +14,13 @@ import {
   View,
   Text,
   StatusBar,
-  FlatList
 } from 'react-native';
 
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
+import GetCars from "./src/GetCars";
 
-
-const taxiData = [
-  {
-    id: '1',
-    provider: 'First Item',
-    price: 4.99
-  },
-  {
-    id: '2',
-    provider: 'Second Item',
-    price: 6
-  },
-  {
-    id: '3',
-    provider: 'Third Item',
-    price: 5.50
-  },
-];
-
-const Item = ({ item }) => (
-  <View style={styles.itemRow}>
-    <Text style={styles.itemProvider}>{item.provider}</Text>
-    <Text style={styles.itemPrice}>{item.price}</Text>
-  </View>
-);
-
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
-  const renderItem = ({ item }) => (
-    <Item item={item} />
-  );
-
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -63,13 +31,8 @@ const App: () => React$Node = () => {
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Rank</Text>
-              <FlatList
-                data={taxiData}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-              />
+              <GetCars/>
             </View>
-   
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -108,7 +71,6 @@ const styles = StyleSheet.create({
   itemRow: {
     flex: 1,
     flexDirection: "row",
-    marginVertical: 40,
     backgroundColor: '#d3d3d3',
     padding: 20,
     marginVertical: 8,
